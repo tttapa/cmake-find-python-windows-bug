@@ -17,11 +17,13 @@ endif()
 # FindPython
 set(Python_ROOT_DIR ${CMAKE_CURRENT_BINARY_DIR}/pythonarm64.${NUGET_PYTHON_VERSION}/tools
     CACHE PATH "" FORCE)
-if (FALSE)
-    # Works
-    find_package(Python 3.8 REQUIRED COMPONENTS Development.Module)
-else()
+option(WITH_SABI
+       "Locate Development.SABIModule component in addition to Development.Module" On)
+if (WITH_SABI)
     # Broken
     find_package(Python 3.8 REQUIRED COMPONENTS Development.Module
                             OPTIONAL_COMPONENTS Development.SABIModule)
+else()
+    # Works
+    find_package(Python 3.8 REQUIRED COMPONENTS Development.Module)
 endif()

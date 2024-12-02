@@ -1,0 +1,21 @@
+name: Build
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        with-sabi: [On, Off]
+      fail-fast: false
+    steps:
+    - uses: actions/checkout@v4
+    - name: Check CMake version
+      shell: powershell
+      run: cmake --version
+    - name: Build
+      shell: powershell
+      run: cmake -S . -B build -D WITH_SABI=${{ matrix.with-sabi }}
